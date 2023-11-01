@@ -20,7 +20,7 @@ st.set_page_config(page_title='Telefonia Fixa', page_icon="📞")
 
 df = pd.read_csv ("datasets/Historico_Acessos.csv", sep= ';')
 acessos = pd.read_csv ("datasets/Acessos_Total.csv", sep= ';', encoding='ISO-8859-1')
-dens = pd.read_csv ("datasets/densidade.csv", sep= ';')
+dens = pd.read_csv ("datasets/Densidade.csv", sep= ';')
 cons = pd.read_csv ("datasets/Concessionarias.csv", sep=';', encoding='ISO-8859-1',low_memory=False)
 aut = pd.read_csv ("datasets/Autorizadas.csv", sep=';', encoding='ISO-8859-1')
 
