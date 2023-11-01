@@ -74,8 +74,9 @@ regioes = {
 # Adicionando a coluna 'Região' com base no mapeamento
 telfixa['Região'] = telfixa['UF'].map(regioes)
 
-# Preencher células em branco na coluna 'Grupo Economico' com 'Telefônica'
-telfixa['Grupo Econômico'].fillna('Telefônica', inplace=True)
+# Preencher células em branco na coluna 'Grupo Economico' 
+
+telfixa['Grupo Economico'] = telfixa.apply(lambda row: 'GVT' if row['CNPJ'] == 3420926000124 else ('OI' if row['CNPJ'] == 33000118001493 else row['Grupo Economico']), axis=1)
 
 # ==============================================================================
 # FUNÇÃO DOS FILTROS 
