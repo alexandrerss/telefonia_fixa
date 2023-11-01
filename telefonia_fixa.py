@@ -74,6 +74,9 @@ regioes = {
 # Adicionando a coluna 'Região' com base no mapeamento
 telfixa['Região'] = telfixa['UF'].map(regioes)
 
+# Preencher células em branco na coluna 'Grupo Economico' com 'Telefônica'
+telfixa['Grupo Econômico'].fillna('Telefônica', inplace=True)
+
 # ==============================================================================
 # FUNÇÃO DOS FILTROS 
 # ==============================================================================
