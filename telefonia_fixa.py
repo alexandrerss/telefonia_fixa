@@ -18,11 +18,11 @@ st.set_page_config(page_title='Telefonia Fixa', page_icon="📞")
 # IMPORTAR DATASETS 
 # ==============================================================================
 
-df = pd.read_csv ("D:/Comunidade_DS/repos/telefonia/datasets/Historico_Acessos.csv", sep= ';')
-acessos = pd.read_csv ("D:/Comunidade_DS/repos/telefonia/datasets/Acessos_Total.csv", sep= ';', encoding='ISO-8859-1')
-dens = pd.read_csv ("D:/Comunidade_DS/repos/telefonia/datasets/densidade.csv", sep= ';')
-cons = pd.read_csv ("D:/Comunidade_DS/repos/telefonia/datasets/Concessionarias.csv", sep=';', encoding='ISO-8859-1',low_memory=False)
-aut = pd.read_csv ("D:/Comunidade_DS/repos/telefonia/datasets/Autorizadas.csv", sep=';', encoding='ISO-8859-1')
+df = pd.read_csv ("datasets/Historico_Acessos.csv", sep= ';')
+acessos = pd.read_csv ("datasets/Acessos_Total.csv", sep= ';', encoding='ISO-8859-1')
+dens = pd.read_csv ("datasets/densidade.csv", sep= ';')
+cons = pd.read_csv ("datasets/Concessionarias.csv", sep=';', encoding='ISO-8859-1',low_memory=False)
+aut = pd.read_csv ("datasets/Autorizadas.csv", sep=';', encoding='ISO-8859-1')
 
 # ==============================================================================
 # LIMPEZA DOS DADOS
@@ -115,7 +115,7 @@ telfixa_filtrado_5 = st.session_state.telfixa.copy()
 # BARRA LATERAL - SIDEBAR
 # ==============================================================================
 
-image_path = 'D:/Comunidade_DS/repos/telefonia/telefone.png'
+image_path = 'telefone.png'
 
 image = Image.open (image_path)
 st.sidebar.image(image, width=200)
