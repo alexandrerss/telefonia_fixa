@@ -9,6 +9,7 @@ import streamlit.components.v1 as components
 import json
 from urllib.request import urlopen
 
+
 from millify import millify as mil
 from PIL import Image
 
@@ -87,29 +88,19 @@ def filtrar_por_intervalo_de_anos(df):
     # Filtro dos anos
     linhas_selecionadas = (df['Data'] >= data_limite[0]) & (df['Data'] <= data_limite[1])
     df = df.loc[linhas_selecionadas, :]
-    return (df)
+    return df
 
-def filtro_maroto(telfixa, coluna):       
-    reg = st.multiselect('Considerar quais categorias desejadas para análise', 
-                         telfixa.loc[:,coluna].unique().tolist(),   
-                         default=telfixa.loc[:, coluna].unique().tolist())
+def aplicar_filtro_maroto(telfixa, coluna):
+    reg = st.multiselect(f'Considerar quais categorias desejadas para análise na coluna {coluna}', 
+                         telfixa[coluna].unique().tolist(),   
+                         default=telfixa[coluna].unique().tolist())
     
-    # Aplicando o filtro de regiões
+    #if st.button("Aplicar Filtro"):
+        # Aplicando o filtro de regiões
     linhas_selec = telfixa[coluna].isin(reg)
     telfixa = telfixa.loc[linhas_selec, :]
     
-    return (telfixa)
-
-# Inicialize o atributo 'telfixa' em st.session_state
-if 'telfixa' not in st.session_state:
-    st.session_state.telfixa = telfixa
-
-# Criar cópias separadas de 'telfixa' para cada aba (para que os filtros sejam independentes)
-telfixa_filtrado_1 = st.session_state.telfixa.copy()
-telfixa_filtrado_2 = st.session_state.telfixa.copy()
-telfixa_filtrado_3 = st.session_state.telfixa.copy()
-telfixa_filtrado_4 = st.session_state.telfixa.copy()
-telfixa_filtrado_5 = st.session_state.telfixa.copy()
+    return telfixa
 
 # ==============================================================================
 # BARRA LATERAL - SIDEBAR
@@ -199,6 +190,8 @@ with tab4:
 with tab5:
     st.markdown('## Total de Acesso - Regiões do Brasil em 2022')
     
+    telfixa = aplicar_filtro_maroto(telfixa, "Região")
+    
     regioes = telfixa.loc[:,['Região','Acessos','Ano']].groupby(['Ano','Região']).sum().reset_index()
     regioes = regioes[regioes['Ano'] == 2022]
     fig = px.bar(regioes, x='Região', y='Acessos',text_auto = '.3s')
@@ -212,9 +205,7 @@ with tab5:
     st.plotly_chart(fig,use_container_width=True)  
     
     st.markdown('## Curva de Evolução - Regiões do Brasil')
-
-    telfixa_filtrado_1 = filtro_maroto(telfixa_filtrado_1,"Região")
-    
+          
     regioes = telfixa.loc[:,['Região','Acessos','Ano']].groupby(['Ano','Região']).sum().reset_index()
     fig = px.line(regioes, x='Ano', y='Acessos', color='Região')
     st.plotly_chart(fig,use_container_width=True)
@@ -247,6 +238,8 @@ with tab5:
 with tab6:
     st.markdown('## Total de Acessos - Grupo Econômico em 2022' )
     
+    telfixa = aplicar_filtro_maroto(telfixa,"Grupo Econômico")
+       
     grupos = telfixa.loc[:,['Grupo Econômico','Acessos','Ano']].groupby(['Ano','Grupo Econômico',]).sum().reset_index()
     grupos = grupos[grupos['Ano'] == 2022]
     fig = px.bar(grupos, x='Grupo Econômico', y='Acessos',text_auto = '.3s')
@@ -254,9 +247,9 @@ with tab6:
     st.plotly_chart(fig,use_container_width=True)
     
     st.markdown('## Curva de Evolução - Grupo Econômico')
-
-    telfixa_filtrado_2 = filtro_maroto(telfixa_filtrado_2,"Grupo Econômico")
     
+    
+   
     grupos = telfixa.loc[:,['Grupo Econômico','Acessos','Ano']].groupby(['Ano','Grupo Econômico',]).sum().reset_index()
     fig = px.line(grupos, x='Ano', y='Acessos', color='Grupo Econômico')
     st.plotly_chart(fig,use_container_width=True)
