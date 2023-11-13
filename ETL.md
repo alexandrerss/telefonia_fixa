@@ -33,8 +33,6 @@ DROP COLUMN "Código IBGE Município";
 ALTER TABLE Autorizadas
 DROP COLUMN "Porte da Prestadora";
 ALTER TABLE Autorizadas
-DROP COLUMN "Tipo de Atendimento";
-ALTER TABLE Autorizadas
 DROP COLUMN "Tipo de Pessoa";
 
 SELECT * 
@@ -47,14 +45,15 @@ DROP COLUMN "Tipo do Acesso";
 
 Para a planilha de “Acessos_Telefonia_Fixa_Total” foi realizado os comandos abaixo, descarte das colunas de “Código IBGE”
 
-ALTER TABLE Telefonia_Fixa 
+ALTER TABLE Densidade 
 DROP COLUMN "Código IBGE";
 
 SELECT * 
-FROM Telefonia_Fixa
+FROM Densidade
 WHERE Mês == 12
 
 Em todos os casos foi utilizado o encoding ISO-8859-1 e não o UTF-8 devido aos acentos.
+
 Para estes arquivos aplicados essa tratativa de dados usando comandos em SQL, o seu tamanho original de 677Mb e agora foi reduzido para apenas 30,6 Mb.
 
 # Limpeza do Dataframes
@@ -62,3 +61,4 @@ Para estes arquivos aplicados essa tratativa de dados usando comandos em SQL, o 
 Com a elaboração dos datasets a serem utilizados no código, agora a segunda parte é os comandos utilizados para a limpeza dos dataframes. Todas estas atividades abaixo não foram realizadas no SQL e sim diretamente no código Python “telefonia_fixa.py”
 A base de histórico de acessos a partir de 2005 nos valores na coluna “Data” estavam com a informação de “1-ano”, sendo assim necessário retirar esse “1-“ antes de cada registro.
 Para ser possível a realização de análises dos dados de acesso por região do Brasil, foi criado uma coluna denominada “Região” correspondente a região do pais de cada estado.
+Foram encontrados também alguns dados em branco na coluna de "Grupo Econômico" , porém como temos a informação de CNPJ foi possivel assim prencher o nome de acordo com o CNPJ informado na coluna CNPJ.
