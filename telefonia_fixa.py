@@ -21,7 +21,7 @@ st.set_page_config(page_title='Telefonia Fixa', page_icon="📞")
 
 df = pd.read_csv ("datasets/Historico_Acessos.csv", sep= ';')
 acessos = pd.read_csv ("datasets/Acessos_Total.csv", sep= ';', encoding='ISO-8859-1')
-dens = pd.read_csv ("datasets/Densidade.csv", sep= ';')
+dens = pd.read_csv ("datasets/Densidade.csv", sep= ';', encoding='ISO-8859-1')
 cons = pd.read_csv ("datasets/Concessionarias.csv", sep=';', encoding='ISO-8859-1',low_memory=False)
 aut = pd.read_csv ("datasets/Autorizadas.csv", sep=';', encoding='ISO-8859-1')
 
@@ -74,6 +74,11 @@ regioes = {
 
 # Adicionando a coluna 'Região' com base no mapeamento
 telfixa['Região'] = telfixa['UF'].map(regioes)
+
+# Aplicar a condição usando numpy.where() e preencher os valores em branco na coluna "Grupo Economico"
+condicao_gvt = (telfixa['CNPJ'] == 3420926000124)
+condicao_ebt = (telfixa['CNPJ'] == 33530486000129)
+telfixa['Grupo Econômico'] = np.where(condicao_gvt, 'GVT', np.where(condicao_ebt, 'TELECOM AMERICAS', telfixa['Grupo Econômico']))
 
 # ==============================================================================
 # FUNÇÃO DOS FILTROS 
